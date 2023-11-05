@@ -19,6 +19,7 @@ public partial class Facturas : System.Web.UI.Page
     {     
         Informacion.DataSource = recolectarInformacion();
         Informacion.DataBind();
+
     }
 
     protected DataTable recolectarInformacion()
