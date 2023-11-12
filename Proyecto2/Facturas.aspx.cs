@@ -9,7 +9,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-
 public partial class Facturas : System.Web.UI.Page
 {
     private static string cs;
@@ -20,14 +19,48 @@ public partial class Facturas : System.Web.UI.Page
         Informacion.DataSource = recolectarInformacion();
         Informacion.DataBind();
     }
-
+     
     protected DataTable recolectarInformacion()
     {
         iniciarConexion();
-        MySqlDataAdapter da = new MySqlDataAdapter("SELECT * FROM Facturas", con);
-        DataTable dt = new DataTable();
-        da.Fill(dt);
-        return dt;
+        MySqlCommand datos = new MySqlCommand("Select * from Facturas", con);
+        DataTable tabla = new DataTable();
+        tabla.Columns.Add("numFactura");
+        tabla.Columns.Add("fechaFactura");
+        tabla.Columns.Add("nombre");
+        tabla.Columns.Add("apellidos");
+        tabla.Columns.Add("CIFCliente");
+        tabla.Columns.Add("importe");
+        tabla.Columns.Add("importeIVA");
+        tabla.Columns.Add("moneda");
+        tabla.Columns.Add("estado");
+        tabla.Columns.Add("fechaCobro");
+
+        con.Open();
+        MySqlDataReader lector = datos.ExecuteReader();
+        while(lector.Read())
+        {
+            DataRow fila = tabla.NewRow();
+            fila["numFactura"] = lector["numFactura"];
+            fila["fechaFactura"] = ((DateTime)lector["fechaFactura"]).ToShortDateString();
+            fila["nombre"] = lector["nombre"];
+            fila["apellidos"] = lector["apellidos"];
+            fila["CIFCliente"] = lector["CIFCliente"];
+            fila["importe"] = formatearNumero(Convert.ToDouble(lector["importe"]));
+            fila["importeIVA"] = formatearNumero(Convert.ToDouble(lector["importe"]) * 1.21);
+            fila["moneda"] = lector["moneda"];
+            fila["estado"] = lector["estado"];
+            fila["fechaCobro"] = ((DateTime)lector["fechaCobro"]).ToShortDateString();
+
+            tabla.Rows.Add(fila);
+        }
+        con.Close();
+        return tabla;
+    }
+
+    protected String formatearNumero(double numero)
+    {
+        return numero.ToString("N2", new System.Globalization.CultureInfo("es-ES"));
     }
 
     protected void iniciarConexion()
