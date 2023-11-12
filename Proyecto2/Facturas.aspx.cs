@@ -13,6 +13,7 @@ public partial class Facturas : System.Web.UI.Page
 {
     private static string cs;
     private static MySqlConnection con;
+    public static DataTable tabla;
 
     protected void Page_Load(object sender, EventArgs e)
     {     
@@ -24,7 +25,7 @@ public partial class Facturas : System.Web.UI.Page
     {
         iniciarConexion();
         MySqlCommand datos = new MySqlCommand("Select * from Facturas", con);
-        DataTable tabla = new DataTable();
+        tabla = new DataTable();
         tabla.Columns.Add("numFactura");
         tabla.Columns.Add("fechaFactura");
         tabla.Columns.Add("nombre");
@@ -69,5 +70,21 @@ public partial class Facturas : System.Web.UI.Page
         con = new MySqlConnection(cs);
     }
 
+
+
+    protected void FuncionFiltro(object sender, EventArgs e)
+    {
+        string nombre = NombreCliente.Text.ToUpper();
+        
+    }
+
+    protected void Informacion_PageIndexChanging(object sender, GridViewPageEventArgs e)
+{
+    Informacion.PageIndex = e.NewPageIndex;
+    // Vuelve a cargar los datos en el GridView
+    Informacion.DataSource = tabla;
+}
+
+    
 
 }

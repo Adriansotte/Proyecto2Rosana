@@ -11,9 +11,25 @@
     <h1>Hello, world!</h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <form id="form1" runat="server">
-        
+        <div>
+            <asp:Label ID="Estado" runat="server" Text="Estado:"></asp:Label>
+            <asp:DropDownList ID="EstadoLista" runat="server" OnSelectedIndexChanged="FuncionFiltro" AutoPostBack="true">
+                <asp:ListItem Value="Todos"></asp:ListItem>
+                <asp:ListItem Value="Emitida"></asp:ListItem>    
+                <asp:ListItem Value="Anulada"></asp:ListItem>
+                <asp:ListItem Value="Cobrada"></asp:ListItem>
+                <asp:ListItem Value="Rechazada"></asp:ListItem>
+                <asp:ListItem Value="Registrada"></asp:ListItem>
+            </asp:DropDownList>
+            <asp:Label AutoPostBack="true" ID="NombreCliente" runat="server" Text="Nombre:" OnChange="FuncionFiltro" ></asp:Label>
+            <asp:TextBox ID="Nombre" runat="server" OnTextChanged="FuncionFiltro" onkeyup="this.value = this.value.toUpperCase()" AutoPostBack="true"></asp:TextBox>
+            
+                
+
+
+        </div>
         <div class="bg-dark w-100 justify-content-center">
-        <asp:GridView ID="Informacion" runat="server" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" class="w-100">
+        <asp:GridView ID="Informacion" runat="server" AllowPaging="True" PageSize="10" OnPageIndexChanging="Informacion_PageIndexChanging" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" class="w-100">
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
             <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
