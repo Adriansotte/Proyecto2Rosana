@@ -79,11 +79,10 @@ public partial class Facturas : System.Web.UI.Page
     }
 
     protected void Informacion_PageIndexChanging(object sender, GridViewPageEventArgs e)
-{
-    Informacion.PageIndex = e.NewPageIndex;
-    // Vuelve a cargar los datos en el GridView
-    Informacion.DataSource = tabla;
-}
+    {
+        Informacion.PageIndex = e.NewPageIndex;
+        Informacion.DataBind();
+    }
 
     
 
