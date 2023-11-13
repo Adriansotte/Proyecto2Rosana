@@ -35,6 +35,4 @@ public partial class Facturas : System.Web.UI.Page
         cs = ConfigurationManager.ConnectionStrings["CONEXION"].ConnectionString;
         con = new MySqlConnection(cs);
     }
-
-
 }
